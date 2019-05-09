@@ -4,9 +4,22 @@
 
 import { handleActions } from 'redux-actions';
 
-export const initialState = {};
+import { emptyListing } from "../../api/reddit";
+
+import { updateListing } from "../actions/reddit";
+
+export const initialState = {
+  listing: JSON.parse(JSON.stringify(emptyListing)),
+};
 
 const reducerMap = new Map([
+  [
+    updateListing,
+    (state, action) => ({
+      ...state,
+      listing: action.payload,
+    }),
+  ],
 ]);
 
 const handlerMap = handleActions(
