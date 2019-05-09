@@ -3,15 +3,21 @@
 // Display search bar elements.
 
 import React from "react";
+import withStyles from "isomorphic-style-loader/withStyles";
+
+import styles from "../../styles/search.css";
 
 const SearchBar = props => (
-  <div >
+  <div
+    className={styles.SearchBar}
+  >
     <label
       htmlFor={"subreddit-search"}
     >
       Choose a Subreddit:
     </label>
     <input
+      className={styles.SearchBox}
       id="subreddit-search"
       type="text"
       onChange={props.onChange}
@@ -25,4 +31,4 @@ const SearchBar = props => (
   </div>
 );
 
-export default SearchBar;
+export default withStyles(styles)(SearchBar);

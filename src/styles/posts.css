@@ -1,0 +1,36 @@
+.PostsList{
+  padding: 1em;
+}
+
+.Post{
+  border: darkgrey solid 1px;
+  border-radius: 5px;
+  padding: .5em;
+}
+
+a{
+  text-decoration: none;
+}
+
+.Info{
+  color: #5D6D7E;
+  font-size: small;
+  font-weight: bold;
+}
+
+.Comment{
+  font-size: small;
+  margin: .5em;
+}
+
+.Title{
+  font-size: large;
+}
+
+.Author{
+  font-style: italic;
+}
+
+.Empty{
+  color: #5D6D7E;
+}

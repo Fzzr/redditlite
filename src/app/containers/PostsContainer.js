@@ -13,6 +13,8 @@ import { fetchListing } from "../../redux/actions/reddit";
 import { getPosts } from "../../redux/selectors/reddit";
 import { getSubredditFromLocation } from "../../utilities";
 
+import styles from "../../styles/posts.css";
+
 class PostsContainer extends Component {
   constructor(props) {
     super(props);
@@ -68,7 +70,9 @@ class PostsContainer extends Component {
     }
 
     return (
-      <div>
+      <div
+        className={styles.PostsList}
+      >
         {postList}
       </div>
     );
@@ -83,4 +87,6 @@ const mapDispatchToProps = dispatch => ({
   updatePostList: subreddit => dispatch(fetchListing(subreddit)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
+const connected = connect(mapStateToProps, mapDispatchToProps)(PostsContainer);
+
+export default withStyles(styles)(connected);

@@ -5,8 +5,16 @@ import React from "react";
 
 const Html = props => (
   <html>
-    <head />
-    <body  >
+    <head>
+      <style>{[...props.css].join('')}</style>
+      <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400" rel="stylesheet"/>
+    </head>
+    <body
+      style={{
+        margin: 0,
+        fontFamily: "'Nunito Sans', sans-serif",
+      }}
+    >
       <div
         id="REACT_ROOT"
         dangerouslySetInnerHTML={{ __html: props.html }}

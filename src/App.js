@@ -2,6 +2,7 @@
 // ===============================
 
 import React, { Component } from "react";
+import withStyles from "isomorphic-style-loader/withStyles";
 import { Router, ServerLocation, LocationProvider } from "@reach/router";
 
 import HeaderContainer from "./app/containers/HeaderContainer";
@@ -13,7 +14,9 @@ const App = props => (
   <ServerLocation
     url={props.location}
   >
-    <div>
+    <div
+      className={styles.App}
+    >
       <Router>
         <HeaderContainer
           path="*"
@@ -30,4 +33,4 @@ const App = props => (
   </ServerLocation>
 );
 
-export default App;
+export default withStyles(styles)(App);

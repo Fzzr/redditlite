@@ -6,6 +6,7 @@ const paths = {
   assets: path.join(__dirname, "dist", "assets"),
   dist: path.join(__dirname, "dist"),
   source: path.join(__dirname, "src"),
+  styles: path.join(__dirname, "src", "styles"),
 };
 
 module.exports = [
@@ -31,6 +32,19 @@ module.exports = [
             loader: "babel-loader",
             options: { babelrc: true }
           },
+        },
+        {
+          test: /\.css$/,
+          include: [paths.styles],
+          use: [
+            "isomorphic-style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                modules: true,
+              },
+            },
+          ],
         },
       ],
     },
@@ -58,6 +72,19 @@ module.exports = [
             loader: "babel-loader",
             options: { babelrc: true },
           },
+        },
+        {
+          test: /\.css$/,
+          include: [paths.styles],
+          use: [
+            "isomorphic-style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                modules: true,
+              },
+            },
+          ],
         },
       ],
     },
