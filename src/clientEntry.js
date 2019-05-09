@@ -13,7 +13,9 @@ configureStore()
   .then(store => {
     const AppWithProviders = (
       <ReduxProvider store={store}>
-        <App />
+        <App
+          location={window.location.pathname}
+        />
       </ReduxProvider>
     );
 

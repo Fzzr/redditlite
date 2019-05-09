@@ -1,4 +1,5 @@
 // SERVER ENTRY POINT
+// ==================
 
 import "@babel/polyfill";
 
@@ -10,12 +11,14 @@ import { configureStore } from "./redux";
 import App from "./App";
 import Html from "./Html"
 
-function render(store) {
+function render(store, request) {
   const state = store.getState();
 
   const AppWithProviders = (
     <ReduxProvider store={store}>
-      <App />
+      <App
+        location={request.url}
+      />
     </ReduxProvider>
   );
 
@@ -34,7 +37,7 @@ function render(store) {
 export default () => {
   return (req, res, next) => {
     configureStore().then(store => {
-      const html = render(store);
+      const html = render(store, req);
       return res.send(`<!DOCTYPE html>${html}`);
     });
   };
