@@ -4,21 +4,26 @@ import "@babel/polyfill";
 
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { Provider as ReduxProvider } from "react-redux";
 
+import { configureStore } from "./redux";
 import App from "./App";
 import Html from "./Html"
 
-function render() {
-  const App = (
-    <App
-      location={request.url}
-    />
+function render(store) {
+  const state = store.getState();
+
+  const AppWithProviders = (
+    <ReduxProvider store={store}>
+      <App />
+    </ReduxProvider>
   );
 
   const html = (
     <Html
+      initialState={JSON.stringify(state)}
       html={ReactDOMServer.renderToString(
-        App
+        AppWithProviders
       )}
     />
   );
@@ -28,7 +33,9 @@ function render() {
 
 export default () => {
   return (req, res, next) => {
-    const html = render();
-    return res.send(`<!DOCTYPE html>${html}`);
+    configureStore().then(store => {
+      const html = render(store);
+      return res.send(`<!DOCTYPE html>${html}`);
+    });
   };
 };
