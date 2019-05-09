@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "@babel/react",
+    ["@babel/env", {
+      "targets": {
+        "node": true,
+        "browsers": [
+          "last 1 version",
+          "> 5% in US"
+        ]
+      }
+    }]
+  ]
+}
