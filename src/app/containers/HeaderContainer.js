@@ -1,12 +1,15 @@
 // HEADER CONTAINER
 // ================
+// Handles display and contents of the header.
 
 import React from "react";
 
-import Header from "../components/Header";
+import SearchBarContainer from "./SearchbarContainer";
 
 const HeaderContainer = () => (
-  <Header />
+  <header>
+      <SearchBarContainer/>
+  </header>
 );
 
 export default HeaderContainer;
