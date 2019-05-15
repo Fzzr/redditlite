@@ -4,7 +4,7 @@
   "description": "Minimal Reddit client",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha"
+    "test": "mocha --require @babel/register test/index.js"
   },
   "author": "Ben Milman",
   "license": "ISC",
