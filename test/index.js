@@ -8,8 +8,12 @@ import mocha from "mocha";
 import { expect } from "chai";
 import fetchMock from "fetch-mock";
 
+import { emptyListing } from "../src/api/reddit";
 import sampleListing from "./sample_listing.json";
 import { getSubredditListing } from "../src/api/reddit";
+
+const subreddit = "smashbros";
+const matcher = `https://www.reddit.com/r/${subreddit}.json`;
 
 describe("API", () => {
   describe("reddit", () => {
@@ -19,11 +23,9 @@ describe("API", () => {
       });
 
       it("should handle a successful response", () => {
-        const subreddit = "smashbros";
-        const matcher = `https://www.reddit.com/r/${subreddit}.json`;
         let result;
         
-        fetchMock.get(matcher, sampleListing/*, {sendAsJson: true}*/);
+        fetchMock.get(matcher, sampleListing);
         
         getSubredditListing(subreddit)
           .then(response => {
@@ -34,11 +36,9 @@ describe("API", () => {
       });
 
       it("should handle an empty subreddit", () => {
-        const subreddit = "";
-        
         fetchMock.mock("*", 200);
 
-        getSubredditListing();
+        getSubredditListing("");
 
         expect(fetchMock.called("*")).to.be.false;
       });
