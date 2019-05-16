@@ -3,6 +3,9 @@
 // Represents an individual post on a subreddit.
 
 import React from "react";
+import withStyles from "isomorphic-style-loader/withStyles";
+
+import styles from "../../styles/posts.css";
 
 const Post = props => {
   const {
@@ -35,18 +38,24 @@ const Post = props => {
   ).format(postDate);
 
   return (
-    <div>
+    <div
+      className={styles.Post}
+    >
       <a
+        className={styles.Title}
         href={url}
       >
         {title}
       </a>
       <br/>
 
-      <span >
+      <span
+        className={styles.Info}
+      >
         {`Posted at ${postTimeString} on ${postDayString} by `}
         {
           <a
+            className={styles.Author}
             href={`https://reddit.com/user/${author}`}
           >
             {author}
@@ -55,6 +64,7 @@ const Post = props => {
       </span>
       <br/>
       <a
+        className={styles.Comment}
         href={`https://reddit.com${permalink}`}
       >
         {`${num_comments} Comments`}
@@ -64,4 +74,4 @@ const Post = props => {
 };
 
 
-export default Post;
+export default withStyles(styles)(Post);
