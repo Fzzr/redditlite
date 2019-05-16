@@ -113,7 +113,6 @@ describe("Redux", () => {
         expect(fetchMock.called(matcher)).to.be.true;
         expect(sagaTester.wasCalled(updateListing.toString())).to.be.true;
         expect(state.reddit.listing).to.deep.equal(sampleListing);
-        // console.log(sagaTester.getCalledActions())
       });
     });
   })
