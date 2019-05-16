@@ -1,19 +1,24 @@
 // TEST RUNNER
 // ============
 
+import "regenerator-runtime/runtime";
+
 import fetch from "node-fetch";
 global.fetch = fetch;
 
 import mocha from "mocha";
 import { expect } from "chai";
 import fetchMock from "fetch-mock";
+import SagaTester from "redux-saga-tester";
 
 import { emptyListing } from "../src/api/reddit";
 import sampleListing from "./sample_listing.json";
 
 import { getSubredditListing } from "../src/api/reddit";
 import redditReducer from "../src/redux/reducers/reddit";
-import { updateListing } from "../src/redux/actions/reddit";
+import rootReducer from "../src/redux/reducers";
+import redditSagas from "../src/redux/sagas/reddit";
+import { fetchListing, updateListing } from "../src/redux/actions/reddit";
 
 const subreddit = "smashbros";
 const matcher = `https://www.reddit.com/r/${subreddit}.json`;
@@ -77,4 +82,39 @@ describe("Redux", () => {
       });
     });
   });
+
+  describe("sagas", () => {
+    describe("reddit", () => {
+      afterEach(() => {
+        fetchMock.reset();
+      });
+
+      const initialState = {
+        reddit: {
+          listing: emptyListing,
+        },
+      };
+
+      it("should fetch and update a listing", async () => {
+        const sagaTester = new SagaTester({
+          initialState,
+          reducers: rootReducer,
+        });
+
+        fetchMock.get(matcher, sampleListing);
+
+        sagaTester.start(redditSagas.watchFetchListingSaga);
+
+        sagaTester.dispatch(fetchListing(subreddit));
+        await sagaTester.waitFor(updateListing.toString());
+
+        const state = sagaTester.getState();
+
+        expect(fetchMock.called(matcher)).to.be.true;
+        expect(sagaTester.wasCalled(updateListing.toString())).to.be.true;
+        expect(state.reddit.listing).to.deep.equal(sampleListing);
+        // console.log(sagaTester.getCalledActions())
+      });
+    });
+  })
 });
